@@ -1,21 +1,35 @@
 from django.shortcuts import render
-from community.forms import *
+from community.models import Article
+import datetime
+#from community.forms import *
 
 # Create your views here.
-def write(request):
-    if request.method == 'POST':
-        form = Form(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = Form()
+def write(req):
+    if req.method == 'POST':
+        title = req.POST['title']
+        contents = req.POST['contents']
+        post = Article(title=title)
+        post.contents=contents
+        post.lastDate = datetime.datetime.now()
+        post.save()
 
-    return render(request, 'write.html', {'form':form})
+    return render(req, 'write.html')
 
-def list(req):
-    articleList = Article.objects.all()
-    return render (req, 'list.html', {'articleList':articleList})
+def doWrite(req):
+    if req.method == 'POST':
+        title = req.POST['title']
+        name = req.POST['name']
+        contens = req.POST['contents']
 
-def view(req, num="1"):
-    article = Article.objects.get(id=num)
-    return render(req, 'view.html', {'article':article})
+
+
+# def list(req):
+#     if req.method == 'POST':
+#
+#
+#     articleList = Article.objects.all()
+#     return render (req, 'list.html', {'articleList':articleList})
+#
+# def view(req, num="1"):
+#     article = Article.objects.get(id=num)
+#     return render(req, 'view.html', {'article':article})

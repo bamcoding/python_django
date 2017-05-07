@@ -5,10 +5,12 @@
     <title>write</title>
   </head>
   <body>
-    <form action="" method="post">
-      {{form.as_p}}
+    <form action="/write/" method="post">
+      title : <input type="text" name="title" value=""><br>
+      contents : <input type="text" name="contents" value=""><br>
       {% csrf_token %}
       <button type="submit" name="button">저장</button>
+
     </form>
   </body>
 </html>
